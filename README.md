@@ -10,9 +10,9 @@
 
 Traditional fine-tuning of a model like GPT-3 (175B parameters) requires updating every weight in every matrix. This is a computationally enormous task. The learnable weight matrices in a Transformer include:
 
-> **W_E, W_p, W_Q, W_K, W_V, W_O, W_1, W_2, W_U, ...**
+> **W_e, W_p, W_q, W_k, W_v, W_o, W_1, W_2, W_u, ...**
 
-Each of these is a large matrix. In GPT-3, the attention matrices **W_Q, W_K, W_V, W_O** are each of shape **(12,288 × 12,288)**. That's ~150 million parameters *each*.
+Each of these is a large matrix. In GPT-3, the attention matrices **W_q, W_k, W_v, W_o** are each of shape **(12,288 × 12,288)**. That's ~150 million parameters *each*.
 
 Two classical approaches existed:
 - **Full fine-tuning**: update all 175B parameters. Expensive.
@@ -101,8 +101,8 @@ LoRA decomposition  ΔW = B × A:
 │         A           │   ×    │  │
 │                     │        │ B│
 └─────────────────────┘        │  │
-                                │  │
-                                └──┘
+                               │  │
+                               └──┘
   = ΔW: (d × k)  ← same shape as W₀
 
 Combined:  W' = W₀ + BA
@@ -133,7 +133,7 @@ This is the same intuition behind **Principal Component Analysis (PCA)**: most o
 
 ### Which Weights to Apply LoRA To?
 
-The attention module contains four projection matrices — **W_Q, W_K, W_V, W_O**. The authors experimentally investigated which combinations to adapt under a fixed parameter budget (Table 5 of the paper). The key finding was that **adapting W_Q and W_V together** yields the best overall performance — not all four matrices. Spreading the parameter budget across more matrix types (at a lower rank each) outperformed concentrating all parameters into a single matrix type. In the paper's experiments, LoRA is applied primarily to **W_q and W_v** for this reason.
+The attention module contains four projection matrices: **W_q, W_k, W_v, and W_o**. The authors experimentally investigated which combinations to adapt under a fixed parameter budget (Table 5 of the paper). The key finding was that **adapting W_q and W_v together** yields the best overall performance (not all four matrices). Spreading the parameter budget across more matrix types (at a lower rank each) outperformed concentrating all parameters into a single matrix type. In the paper's experiments, LoRA is applied primarily to **W_q and W_v** for this reason.
 
 ---
 
@@ -143,7 +143,7 @@ The authors benchmarked LoRA against full fine-tuning and other parameter-effici
 
 **Limitations:**
 - More complex domain shifts may require higher rank `r` or adapting more layers.
-- The optimal choice of `r` and which layers to adapt is partly empirical; `r = 4` and `r = 8` are reliable defaults.
+- The optimal choice of `r` and which layers to adapt is partly empirical; `r = 4` and `r = 8` are commonly used in industry.
 
 ---
 
