@@ -85,9 +85,13 @@ For the square attention matrices in GPT-3, `d = k = d_model`. The full adapted 
 
 $$W' = W_0 + \Delta W = W_0 + B \cdot A$$
 
-The output is additionally scaled by α/r, where α is a constant (typically set equal to the first `r` tried and left untuned). The modified forward pass is:
+The equation for inference becomes:
 
-$$h = W_0 x + \frac{\alpha}{r} \cdot BAx$$
+$$h = W' x = (W_0 + B \cdot A) x = W_0 x + B \cdot A x$$
+
+The trainable matrices are additionally scaled by α/r, where α is a constant (typically set equal to the first `r` tried and left untuned). The modified forward pass is:
+
+$$h = W_0 x + \frac{\alpha}{r} \cdot B \cdot A x$$
 
 This scaling reduces the need to retune hyperparameters when varying `r`.
 
