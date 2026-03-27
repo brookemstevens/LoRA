@@ -32,10 +32,18 @@ When multiplying two matrices, the output takes the **outer dimensions**:
 (m × r) × (r × n)  =  (m × n)
 ```
 
+```
+┌─────┐           ┌─────────────────────┐         ┌─────────────────────┐
+│     │     ×     |       r × n         │    =    │                     │
+│m × r│           └─────────────────────┘         │       m × n         │
+│     │                                           │                     │
+└─────┘                                           └─────────────────────┘
+```
+
 **Example:**
 
 ```
-A            B              Output
+A              B              Output
 [1000 × 4]  ×  [4 × 1000]  =  [1000 × 1000]
 ```
 
@@ -88,7 +96,7 @@ This scaling reduces the need to retune hyperparameters when varying `r`.
 ```
 Original weight matrix W₀  (d × k):
 ┌─────────────────────┐
-│                     │   (frozen — never updated)
+│                     │   (frozen, never updated)
 │        W₀           │
 │                     │
 └─────────────────────┘
