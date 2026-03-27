@@ -159,7 +159,7 @@ During training, standard backpropagation computes a loss **L** and propagates g
 
 $$\frac{\partial \mathcal{L}}{\partial W}$$
 
-This is a `(d × d)` matrix — expensive to store and update.
+This is a `(d × d)` matrix, which is expensive to store and update.
 
 In LoRA, since W₀ is frozen, gradients only flow through **A** and **B**. Let the forward pass output be:
 
@@ -172,14 +172,14 @@ where A is `(r × k)` and B is `(d × r)`. Let `u = Ax` (shape `r × 1`), so `h_
 $$\frac{\partial \mathcal{L}}{\partial A} = B^\top \cdot \frac{\partial \mathcal{L}}{\partial h} \cdot x^\top$$
 
 - **B^⊤** has shape `(r × d)`, collapsing the `(d×1)` upstream gradient into a `(r×1)` vector in the low-rank space.
-- The outer product with **x^⊤** `(1 × k)` gives the result shape `(r × k)` — matching A.
+- The outer product with **x^⊤** `(1 × k)` gives the result shape `(r × k)`, matching A.
 
 ### Gradient with respect to B:
 
 $$\frac{\partial \mathcal{L}}{\partial B} = \frac{\partial \mathcal{L}}{\partial h} \cdot (Ax)^\top = \frac{\partial \mathcal{L}}{\partial h} \cdot x^\top \cdot A^\top$$
 
 - **∂L/∂h** has shape `(d × 1)` and **u^⊤ = (Ax)^⊤** has shape `(1 × r)`.
-- The outer product gives result shape `(d × r)` — matching B.
+- The outer product gives result shape `(d × r)`, matching B.
 
 ### Why Initializing B = 0 Matters
 
@@ -187,7 +187,7 @@ At step 0, since B = 0:
 
 $$\frac{\partial \mathcal{L}}{\partial A}\bigg|_{t=0} = \underbrace{B^\top}_{= \mathbf{0}} \cdot \frac{\partial \mathcal{L}}{\partial h} \cdot x^\top = \mathbf{0}$$
 
-A receives no gradient update at the very first step. Meanwhile, B's gradient `∂L/∂B = ∂L/∂h · (Ax)^T` is nonzero since A is initialized from a Gaussian. This means B begins accumulating updates first, after which A's gradients become nonzero and both matrices train together. Crucially, this initialization ensures `ΔW = BA = 0` at the start, so the model begins training behaving exactly like the pretrained model — a stable, well-defined starting point.
+A receives no gradient update at the very first step. Meanwhile, B's gradient `∂L/∂B = ∂L/∂h · (Ax)^T` is nonzero since A is initialized from a Gaussian. This means B begins accumulating updates first, after which A's gradients become nonzero and both matrices train together. Crucially, this initialization ensures `ΔW = BA = 0` at the start, so the model begins training behaving exactly like the pretrained model.
 
 ### Parameter Update Rule
 
@@ -197,7 +197,7 @@ $$A \leftarrow A - \eta \cdot \frac{\partial \mathcal{L}}{\partial A}$$
 
 $$B \leftarrow B - \eta \cdot \frac{\partial \mathcal{L}}{\partial B}$$
 
-In practice, LoRA is compatible with any optimizer (Adam, AdamW, etc.), and the low dimensionality of A and B means the optimizer state itself is also dramatically smaller — a secondary but meaningful efficiency gain.
+In practice, LoRA is compatible with any optimizer (Adam, AdamW, etc.), and the low dimensionality of A and B means the optimizer state itself is also dramatically smaller, a secondary but meaningful efficiency gain.
 
 ---
 
