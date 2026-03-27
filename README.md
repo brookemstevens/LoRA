@@ -74,7 +74,7 @@ For GPT-3's attention matrices (shape `12,288 × 12,288`) with rank `r = 4`:
 
 Instead of directly modifying a weight matrix **W**, LoRA learns a low-rank *change* to it:
 
-$$\Delta W = B \cdot A$$
+$$\Delta W = BA$$
 
 where:
 - **A** has shape `(r × k)`: projects *down* from input dimension `k` to rank `r`
@@ -83,15 +83,15 @@ where:
 
 For the square attention matrices in GPT-3, `d = k = d_model`. The full adapted weight used at inference is:
 
-$$W' = W_0 + \Delta W = W_0 + B \cdot A$$
+$$W' = W_0 + \Delta W = W_0 + BA$$
 
 If we define the output as h, the equation for inference becomes:
 
-$$h = W' x = (W_0 + B \cdot A) x = W_0 x + B \cdot A x$$
+$$h = W' x = (W_0 + BA) x = W_0 x + BA x$$
 
 The trainable matrices are additionally scaled by α/r, where α is a constant (typically set equal to the first `r` tried and left untuned). The modified forward pass is:
 
-$$h = W_0 x + \frac{\alpha}{r} \cdot B \cdot A x$$
+$$h = W_0 x + \frac{\alpha}{r} \cdot BAx$$
 
 This scaling reduces the need to retune hyperparameters when varying `r`.
 
