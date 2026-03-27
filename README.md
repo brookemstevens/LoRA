@@ -165,7 +165,7 @@ $$\frac{\partial \mathcal{L}}{\partial W}$$
 
 This is a `(d × d)` matrix, which is expensive to store and update.
 
-In LoRA, since W₀ is frozen, gradients only flow through **A** and **B**. Let the forward pass output be:
+In LoRA, since W₀ is frozen, gradients only flow through **A** and **B**. Let the forward pass output be the unscaled version above:
 
 $$h = W_0 x + BAx$$
 
