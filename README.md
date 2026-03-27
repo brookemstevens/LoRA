@@ -169,7 +169,7 @@ In LoRA, since W₀ is frozen, gradients only flow through **A** and **B**. Let 
 
 $$h = W_0 x + BAx$$
 
-where A is `(r × k)` and B is `(d × r)`. Let `u = Ax` (shape `r × 1`), so `h_lora = Bu`. The gradient with respect to the output is **∂L/∂h**. By the chain rule:
+where A is `(r × k)` and B is `(d × r)`. The gradient with respect to the output is **∂L/∂h**. By the chain rule:
 
 ### Gradient with respect to A:
 
@@ -182,7 +182,7 @@ $$\frac{\partial \mathcal{L}}{\partial A} = B^\top \cdot \frac{\partial \mathcal
 
 $$\frac{\partial \mathcal{L}}{\partial B} = \frac{\partial \mathcal{L}}{\partial h} \cdot (Ax)^\top = \frac{\partial \mathcal{L}}{\partial h} \cdot x^\top \cdot A^\top$$
 
-- **∂L/∂h** has shape `(d × 1)` and **u^⊤ = (Ax)^⊤** has shape `(1 × r)`.
+- **∂L/∂h** has shape `(d × 1)`.
 - The outer product gives result shape `(d × r)`, matching B.
 
 ### Why Initializing B = 0 Matters
