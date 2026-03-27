@@ -85,7 +85,7 @@ For the square attention matrices in GPT-3, `d = k = d_model`. The full adapted 
 
 $$W' = W_0 + \Delta W = W_0 + B \cdot A$$
 
-The equation for inference becomes:
+If we define the output as h, the equation for inference becomes:
 
 $$h = W' x = (W_0 + B \cdot A) x = W_0 x + B \cdot A x$$
 
