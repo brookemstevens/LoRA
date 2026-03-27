@@ -8,7 +8,7 @@
 
 ## Why Fine-Tuning is Hard
 
-Traditional fine-tuning of a model like GPT-3 (175B parameters) requires updating every weight in every matrix. This is a computationally enormous task. The learnable weight matrices in a Transformer include:
+Traditional fine-tuning of a model like GPT-3 (175B parameters) requires updating every weight in every matrix. This is a computationally enormous task. In Formal Algorithms for Transformers (Phuong & Hutter, 2022), the learnable weight matrices in a Transformer include:
 
 > **W_e, W_p, W_q, W_k, W_v, W_o, W_1, W_2, W_u, ...**
 
