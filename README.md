@@ -139,7 +139,7 @@ This is the same intuition behind **Principal Component Analysis (PCA)**: most o
 
 ### Which Weights to Apply LoRA To?
 
-The attention module contains four projection matrices: **W_q, W_k, W_v, and W_o**. The authors experimentally investigated which combinations to adapt under a fixed parameter budget (Table 5 of the paper). The key finding was that **adapting W_q and W_v together** yields the best overall performance (not all four matrices). Spreading the parameter budget across more matrix types (at a lower rank each) outperformed concentrating all parameters into a single matrix type. In the paper's experiments, LoRA is applied primarily to **W_q and W_v** for this reason.
+The attention module contains four projection matrices: **W_q, W_k, W_v, and W_o**. The authors experimentally investigated which combinations to adapt under a fixed parameter budget (Table 5 of the paper). The key finding was that **adapting W_q and W_v together** yields the best overall performance. Spreading the parameter budget across more matrix types (at a lower rank each) outperformed concentrating all parameters into a single matrix type. In the paper's experiments, LoRA is applied primarily to **W_q and W_v** for this reason.
 
 ---
 
