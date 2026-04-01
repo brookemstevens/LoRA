@@ -14,7 +14,7 @@ Traditional fine-tuning of a model like GPT-3 (175B parameters) requires updatin
 
 Each of these is a large matrix. In GPT-3, the attention matrices **W_q, W_k, W_v, W_o** are each of shape **(12,288 × 12,288)**. That's ~150 million parameters *each*.
 
-Two classical approaches existed:
+A few classical approaches existed before LoRA, including:
 - **Full fine-tuning**: update all 175B parameters. Expensive.
 - **Partial fine-tuning**: freeze most layers, update a subset. Less expressive.
 
