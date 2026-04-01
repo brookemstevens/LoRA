@@ -163,7 +163,7 @@ During training, standard backpropagation computes a loss **L** and propagates g
 
 $$\frac{\partial \mathcal{L}}{\partial W}$$
 
-This is a `(d × d)` matrix, which is expensive to store and update.
+This is a `(d × k)` matrix, which is expensive to store and update.
 
 In LoRA, since W₀ is frozen, gradients only flow through **A** and **B**. Let the forward pass output be the unscaled version from above:
 
